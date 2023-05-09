@@ -16,29 +16,28 @@ function Juego() {
   const [letra1, setLetra1] = useState("");
   const [letra2, setLetra2] = useState("");
   const [letra3, setLetra3] = useState("");
-  let array = []
+  const [array, setArray] = useState([]);
+
+
+  
 
 
   const comenzar = () => {
     setJugando(true);
     setTimeout(() => {
       setActivo1(true);
-      let l1 = Math.random() * (91 - 65) + 65
-      setLetra1(String.fromCharCode(l1))
+      let arr = []
+      let l1 = String.fromCharCode(Math.random() * (91 - 65) + 65)
+      setLetra1(l1)
       setActivo2(true);
-      let l2 = Math.random() * (91 - 65) + 65
-      setLetra2(String.fromCharCode(l2));
+      let l2 = String.fromCharCode(Math.random() * (91 - 65) + 65)
+      setLetra2(l2);
       setActivo3(true);
-      let l3 = Math.random() * (91 - 65) + 65
-      setLetra3(String.fromCharCode(l3));
-
-      array.push(l1)
-      array.push(l2)
-      array.push(l3)
-      array.sort()
-      console.log(array)
-
-
+      let l3 = String.fromCharCode(Math.random() * (91 - 65) + 65)
+      setLetra3(l3);
+      arr.push(l1,l2,l3)
+      arr.sort()
+      setArray(arr)
       setTop1(Math.floor(Math.random() * 101));
       setLeft1(Math.floor(Math.random() * 101));
       setTop2(Math.floor(Math.random() * 101));
@@ -53,7 +52,8 @@ function Juego() {
 
   const cliqueado1 = () => {
     let timer = performance.now() - tiempo;
-    if(  array[0] == l1   )
+
+    if(  array[0] == letra1   )
     {
         array.shift()
         setActivo1(false);
@@ -69,7 +69,7 @@ function Juego() {
 
   const cliqueado2 = () => {
     let timer = performance.now() - tiempo;
-    if(array[0] == l2){
+    if(array[0] == letra2){
         array.shift()
         setActivo2(false);
     }
@@ -82,9 +82,9 @@ function Juego() {
 
   const cliqueado3 = () => {
     let timer = performance.now() - tiempo;
-    if(array[0] == l3){
+    if(array[0] == letra3){
         array.shift()
-        setActivo2(false);
+        setActivo3(false);
     }
     
     if(!activo1 && !activo2){
@@ -100,15 +100,16 @@ function Juego() {
         (<button onClick={comenzar}>Comenzar</button>)
       }
       {activo1 &&
-        (<button  style={{position: 'absolute', top: `${top1}%`, left:`${left1}%` }} onClick={cliqueado1}>{letra1}</button>)
+        (<button name={`${letra1}`} style={{position: 'absolute', top: `${top1}%`, left:`${left1}%` }} onClick={cliqueado1}>{letra1}</button>)
       }
       {
           activo2 &&
-          (<button  style={{position: 'absolute', top: `${top2}%`, left:`${left2}%` }} onClick={cliqueado2}>{letra2}</button>)
+          (<button name={`${letra2}`} style={{position: 'absolute', top: `${top2}%`, left:`${left2}%` }} onClick={cliqueado2}>{letra2}</button>)
       }
       {
           activo3 &&
-          (<button  style={{position: 'absolute', top: `${top3}%`, left:`${left3}%` }} onClick={cliqueado3}>{letra3}</button>)
+          (<button name={`${letra3}`}  style={{position: 'absolute', top: `${top3}%`, left:`${left3}%` }} onClick={cliqueado3}>{letra3}</button>)
+
       }
       {resultado && (<p>{resultado}</p>)}
     </div>
